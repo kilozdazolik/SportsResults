@@ -11,7 +11,7 @@ var title = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"content\"]/h1").First().
 Console.WriteLine(title);
 
 // game_summaries
-var htmlBody = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[3]");
+var htmlBody = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'game_summaries')]");
 
 HtmlNodeCollection childNodes = htmlBody.ChildNodes;
 
