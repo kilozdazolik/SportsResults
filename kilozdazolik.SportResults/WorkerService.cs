@@ -13,7 +13,7 @@ namespace kilozdazolik.SportResutls
                 var scrapedResult = await scraperService.ScrapeDataAsync();
 
                 DateTime now = DateTime.Now;
-                DateTime goalDate = new DateTime(now.Year, now.Month, now.Day, 22, 51, 00);
+                DateTime goalDate = new DateTime(now.Year, now.Month, now.Day, 08, 00, 00);
 
                 if (goalDate < now)
                 {
@@ -29,24 +29,28 @@ namespace kilozdazolik.SportResutls
             }
         }
 
-        //TODO: Refactor the match count and the match number in the email body, it is not working as expected
         private string GetScrapedData(List<TeamScore> matches)
         {
             StringBuilder sb = new StringBuilder();
+            int matchNumber = 1;
 
-            byte i = 1;
-            byte matchCount = 1;
-            foreach (var match in matches)
-            {   
+            for (int i = 0; i < matches.Count; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    sb.AppendLine($"Match {matchNumber}");
+                    sb.AppendLine("----------");
+                    matchNumber++;
+                }
+
+                sb.AppendLine($"{matches[i].TeamName}: {matches[i].Score}");
+
                 if (i % 2 != 0)
                 {
-                    sb.AppendLine($"Match {matchCount}");
-                    sb.AppendLine("----------");
+                    sb.AppendLine();
                 }
-                
-                sb.AppendLine($"{match.TeamName}: {match.Score}");
-                matchCount++;
             }
+
             return sb.ToString();
         }
     }
